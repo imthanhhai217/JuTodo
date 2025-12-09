@@ -7,7 +7,7 @@ Thay đổi trạng thái sau khi được tạo ra
 class MyTextView extends StatelessWidget {
   final String text;
 
-  MyTextView({this.text = "Default Text"});
+  const MyTextView({this.text = "Default Text"});
 
   @override
   Widget build(BuildContext context) {

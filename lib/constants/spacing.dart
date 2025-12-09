@@ -1,0 +1,1 @@
+const kDefaultMargin = 10.0;
