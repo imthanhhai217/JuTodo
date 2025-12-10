@@ -21,6 +21,7 @@ class _LoginScreenState extends State<LoginScreen> {
   String _userName = "";
   String _password = "";
   final _loginFormKey = GlobalKey<FormState>();
+  bool _isObscure = true;
 
   @override
   Widget build(BuildContext context) {
@@ -36,8 +37,9 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             children: [
               TextFormField(
-                style: AppTypography.title,
-                decoration: InputDecoration(labelText: "Username"),
+                decoration: InputDecoration(
+                  label: Text("Username", style: AppTypography.body),
+                ),
                 keyboardType: TextInputType.text,
                 validator: Validator.validatorEmail,
                 onSaved: (newValue) {
@@ -45,10 +47,21 @@ class _LoginScreenState extends State<LoginScreen> {
                 },
               ),
               TextFormField(
-                style: AppTypography.title,
-                decoration: InputDecoration(labelText: "Password"),
+                decoration: InputDecoration(
+                  label: Text("Password", style: AppTypography.body),
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        _isObscure = !_isObscure;
+                      });
+                    },
+                    icon: _isObscure
+                        ? Icon(Icons.visibility_off)
+                        : Icon(Icons.visibility),
+                  ),
+                ),
                 keyboardType: TextInputType.text,
-                obscureText: true,
+                obscureText: _isObscure,
                 validator: Validator.validatorPassword,
                 onSaved: (newValue) {
                   _password = newValue ?? "";
