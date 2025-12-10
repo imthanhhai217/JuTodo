@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ju_reminder/constants/constants.dart';
 import 'package:ju_reminder/constants/validator.dart';
+import 'package:ju_reminder/data/local/app_storage.dart';
 import 'package:ju_reminder/themes/app_typography.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -70,7 +71,7 @@ class _LoginScreenState extends State<LoginScreen> {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     if (_loginFormKey.currentState?.validate() ?? false) {
                       _loginFormKey.currentState?.save();
                       var userName = _userName.trim();
@@ -78,6 +79,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       if (userName == "test@gmail.com" &&
                           _password == "123456") {
                         // Navigate to home page or show success message
+                        await AppStorage.saveUserName(userName);
                         Navigator.pop(context, userName);
                       } else {
                         // Show error message

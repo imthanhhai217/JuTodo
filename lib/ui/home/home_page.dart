@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ju_reminder/constants/routers.dart';
+import 'package:ju_reminder/data/local/app_storage.dart';
 import 'package:ju_reminder/themes/app_button_style.dart';
 
 import '../../MyTextView.dart';
@@ -30,6 +31,13 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _loadUser();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -48,7 +56,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     width: double.infinity,
                     child: ElevatedButton(
                       style: AppButtonStyles.elevateWhiteButtonStyle,
-                      onPressed: () {
+                      onPressed: () async {
+                        await AppStorage.logout();
                         setState(() {
                           _isLoggedIn = false;
                           _userName = "";
@@ -144,5 +153,13 @@ class _MyHomePageState extends State<MyHomePage> {
       context,
       MaterialPageRoute(builder: (context) => DetailsPage(message: data)),
     );
+  }
+
+  void _loadUser() async {
+    final userNameLocal = await AppStorage.getUserName();
+    setState(() {
+      _isLoggedIn = userNameLocal != null && userNameLocal.isNotEmpty;
+      _userName = userNameLocal ?? "";
+    });
   }
 }
