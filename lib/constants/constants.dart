@@ -4,3 +4,4 @@ const kDefaultAvatar =
     "-smiling-mouth-162122340.jpg";
 
 const kAppName = "JuTodo";
+const kLoginTitle = "Login";

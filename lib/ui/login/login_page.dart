@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ju_reminder/constants/constants.dart';
 import 'package:ju_reminder/constants/validator.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -23,6 +24,10 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        title: Text(kLoginTitle),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Form(
@@ -45,23 +50,30 @@ class _LoginScreenState extends State<LoginScreen> {
                   _password = newValue ?? "";
                 },
               ),
-              ElevatedButton(
-                onPressed: () {
-                  if (_loginFormKey.currentState?.validate() ?? false) {
-                    _loginFormKey.currentState?.save();
-                    // Perform login action with _userName and _password
-                    if (_userName == "test@gmail.com" && _password == "123456") {
-                      // Navigate to home page or show success message
-                      Navigator.pop(context, _userName);
-                    } else {
-                      // Show error message
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text("Invalid username or password")),
-                      );
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {
+                    if (_loginFormKey.currentState?.validate() ?? false) {
+                      _loginFormKey.currentState?.save();
+                      var userName = _userName.trim();
+                      // Perform login action with _userName and _password
+                      if (userName == "test@gmail.com" &&
+                          _password == "123456") {
+                        // Navigate to home page or show success message
+                        Navigator.pop(context, userName);
+                      } else {
+                        // Show error message
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text("Invalid username or password"),
+                          ),
+                        );
+                      }
                     }
-                  }
-                },
-                child: Text("Login"),
+                  },
+                  child: Text("Login"),
+                ),
               ),
             ],
           ),

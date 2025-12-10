@@ -19,16 +19,14 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
-  var isLoggedIn = false;
-  String userName = "";
+  var _isLoggedIn = false;
+  String _userName = "";
 
   void _incrementCounter() {
     setState(() {
       _counter++;
     });
   }
-
-  // profileRow(userName: "Haisendbug"),
 
   @override
   Widget build(BuildContext context) {
@@ -39,20 +37,20 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
-        child: isLoggedIn
+        child: _isLoggedIn
             ? Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  profileRow(userName: userName),
+                  profileRow(userName: _userName),
                   SizedBox(height: kDefaultMargin),
                   ElevatedButton(
                     onPressed: () {
                       setState(() {
-                        isLoggedIn = false;
-                        userName = "";
+                        _isLoggedIn = false;
+                        _userName = "";
                       });
                     },
-                    child: Text("Login"),
+                    child: Text("Logout"),
                   ),
                 ],
               )
@@ -61,8 +59,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   final result = await Navigator.pushNamed(context, rLogin);
                   if (result != null && result is String) {
                     setState(() {
-                      isLoggedIn = false;
-                      userName = result;
+                      _isLoggedIn = true;
+                      _userName = result;
                     });
                   }
                 },
