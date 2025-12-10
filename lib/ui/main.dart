@@ -6,6 +6,7 @@ import 'package:ju_reminder/ui/login/login_page.dart';
 import 'package:ju_reminder/ui/splash/splash_screen.dart';
 
 import '../constants/constants.dart';
+import '../themes/theme.dart';
 import 'home/home_page.dart';
 
 const TAG = "JuReminder: ";
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(colorScheme: .fromSeed(seedColor: Colors.cyanAccent)),
+      theme: AppTheme.lightTheme,
       debugShowCheckedModeBanner: false,
       home: const SplashScreen(),
       routes: {

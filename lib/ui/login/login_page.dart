@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ju_reminder/constants/constants.dart';
 import 'package:ju_reminder/constants/validator.dart';
+import 'package:ju_reminder/themes/app_typography.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -35,6 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             children: [
               TextFormField(
+                style: AppTypography.title,
                 decoration: InputDecoration(labelText: "Username"),
                 keyboardType: TextInputType.text,
                 validator: Validator.validatorEmail,
@@ -43,8 +45,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 },
               ),
               TextFormField(
+                style: AppTypography.title,
                 decoration: InputDecoration(labelText: "Password"),
                 keyboardType: TextInputType.text,
+                obscureText: true,
                 validator: Validator.validatorPassword,
                 onSaved: (newValue) {
                   _password = newValue ?? "";
@@ -72,7 +76,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       }
                     }
                   },
-                  child: Text("Login"),
+                  child: Text("Login", style: AppTypography.body),
                 ),
               ),
             ],

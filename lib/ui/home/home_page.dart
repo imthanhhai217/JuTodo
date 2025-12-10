@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ju_reminder/constants/routers.dart';
+import 'package:ju_reminder/themes/app_button_style.dart';
 
 import '../../MyTextView.dart';
 import '../../constants/constants.dart';
@@ -43,28 +44,35 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: [
                   profileRow(userName: _userName),
                   SizedBox(height: kDefaultMargin),
-                  ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        _isLoggedIn = false;
-                        _userName = "";
-                      });
-                    },
-                    child: Text("Logout"),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      style: AppButtonStyles.elevateWhiteButtonStyle,
+                      onPressed: () {
+                        setState(() {
+                          _isLoggedIn = false;
+                          _userName = "";
+                        });
+                      },
+                      child: Text("Logout"),
+                    ),
                   ),
                 ],
               )
-            : ElevatedButton(
-                onPressed: () async {
-                  final result = await Navigator.pushNamed(context, rLogin);
-                  if (result != null && result is String) {
-                    setState(() {
-                      _isLoggedIn = true;
-                      _userName = result;
-                    });
-                  }
-                },
-                child: Text("Login"),
+            : SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () async {
+                    final result = await Navigator.pushNamed(context, rLogin);
+                    if (result != null && result is String) {
+                      setState(() {
+                        _isLoggedIn = true;
+                        _userName = result;
+                      });
+                    }
+                  },
+                  child: Text("Login"),
+                ),
               ),
       ),
       floatingActionButton: FloatingActionButton(
