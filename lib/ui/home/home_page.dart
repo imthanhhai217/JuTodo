@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:ju_reminder/constants/routers.dart';
 
 import '../../MyTextView.dart';
 import '../../constants/constants.dart';
-import '../../constants/routers.dart';
 import '../../constants/spacing.dart';
 import '../../widgets/clickable_wrapper.dart';
 import '../../widgets/image_loader.dart';
@@ -19,12 +19,16 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  var isLoggedIn = false;
+  String userName = "";
 
   void _incrementCounter() {
     setState(() {
       _counter++;
     });
   }
+
+  // profileRow(userName: "Haisendbug"),
 
   @override
   Widget build(BuildContext context) {
@@ -35,10 +39,35 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [profileRow(userName: "Haisendbug")],
-        ),
+        child: isLoggedIn
+            ? Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  profileRow(userName: userName),
+                  SizedBox(height: kDefaultMargin),
+                  ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        isLoggedIn = false;
+                        userName = "";
+                      });
+                    },
+                    child: Text("Login"),
+                  ),
+                ],
+              )
+            : ElevatedButton(
+                onPressed: () async {
+                  final result = await Navigator.pushNamed(context, rLogin);
+                  if (result != null && result is String) {
+                    setState(() {
+                      isLoggedIn = false;
+                      userName = result;
+                    });
+                  }
+                },
+                child: Text("Login"),
+              ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
@@ -109,9 +138,5 @@ class _MyHomePageState extends State<MyHomePage> {
       context,
       MaterialPageRoute(builder: (context) => DetailsPage(message: data)),
     );
-  }
-
-  void navigate2Login() {
-    Navigator.pushNamed(context, rLogin);
   }
 }

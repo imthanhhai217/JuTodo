@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:ju_reminder/MyTextView.dart';
 import 'package:ju_reminder/bs/Basic.dart';
 import 'package:ju_reminder/constants/routers.dart';
-import 'package:ju_reminder/constants/spacing.dart';
 import 'package:ju_reminder/ui/details/details_page.dart';
+import 'package:ju_reminder/ui/login/login_page.dart';
 import 'package:ju_reminder/ui/splash/splash_screen.dart';
-import 'package:ju_reminder/widgets/clickable_wrapper.dart';
-import 'package:ju_reminder/widgets/image_loader.dart';
 
 import '../constants/constants.dart';
+import 'home/home_page.dart';
 
 const TAG = "JuReminder: ";
 
@@ -29,6 +27,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(colorScheme: .fromSeed(seedColor: Colors.cyanAccent)),
       debugShowCheckedModeBanner: false,
       home: const SplashScreen(),
+      routes: {
+        rLogin: (context) => const LoginScreen(),
+        rHome: (context) => const MyHomePage(title: kAppName),
+        rDetails: (context) => const DetailsPage(),
+      },
     );
   }
 }
