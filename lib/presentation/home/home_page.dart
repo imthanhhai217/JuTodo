@@ -3,7 +3,6 @@ import 'package:ju_reminder/constants/routers.dart';
 import 'package:ju_reminder/data/local/app_storage.dart';
 import 'package:ju_reminder/themes/app_button_style.dart';
 
-import '../../MyTextView.dart';
 import '../../constants/constants.dart';
 import '../../constants/spacing.dart';
 import '../../widgets/clickable_wrapper.dart';
@@ -20,22 +19,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
   var _isLoggedIn = false;
   String _userName = "";
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    _loadUser();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,11 +69,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
     );
   }
 
@@ -118,48 +98,10 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Column demoColumn() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.eighteen_mp),
-            MyTextView(text: "Counter : "),
-            MyTextView(text: _counter.toString()),
-          ],
-        ),
-
-        Padding(
-          padding: const EdgeInsets.all(kDefaultMargin),
-          child: Stack(
-            children: [
-              Container(width: 100, height: 100, color: Colors.blue),
-              Positioned(
-                top: 25,
-                left: 25,
-                child: Container(width: 50, height: 50, color: Colors.red),
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-
   void navigationToDetails(String data) {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => DetailsPage(message: data)),
     );
-  }
-
-  void _loadUser() async {
-    final userNameLocal = await AppStorage.getUserName();
-    setState(() {
-      _isLoggedIn = userNameLocal != null && userNameLocal.isNotEmpty;
-      _userName = userNameLocal ?? "";
-    });
   }
 }
