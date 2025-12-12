@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ju_reminder/constants/constants.dart';
-import 'package:ju_reminder/constants/routers.dart';
 import 'package:ju_reminder/constants/validator.dart';
 import 'package:ju_reminder/presentation/auth/bloc/auth_bloc.dart';
 import 'package:ju_reminder/presentation/auth/cubit/auth_cubit.dart';
@@ -42,14 +41,14 @@ class LoginScreen extends StatelessWidget {
           } else {
             // Đóng loading dialog nếu đang hiển thị
             if (_isDialogShowing) {
-              Navigator.of(context, rootNavigator: true).pop();
+              Navigator.pop(context);
               _isDialogShowing = false;
             }
 
             if (state is AuthAuthenticatedState) {
               // Chuyển sang Home
               print('$TAG LoginScreen - Navigating to Home');
-              Navigator.of(context).pushReplacementNamed(rHome);
+              Navigator.pop(context, state.userEmail);
               ScaffoldMessenger.of(
                 context,
               ).showSnackBar(SnackBar(content: Text('Đăng nhập thành công!')));
@@ -80,7 +79,7 @@ class LoginScreen extends StatelessWidget {
             title: Text(kLoginTitle),
           ),
           body: Padding(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(AppDimen.kDefaultScreenPadding),
             child: Form(
               key: _loginFormKey,
               child: BlocBuilder<LoginCubit, LoginState>(

@@ -18,6 +18,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     emit(AuthLoadingState());
 
     try {
+      await Future.delayed(
+        const Duration(seconds: 3),
+      ); // Simulate network delay
       final success = await repository.login(event.userName, event.password);
       print('$TAG AuthBloc - Login result: $success');
 
