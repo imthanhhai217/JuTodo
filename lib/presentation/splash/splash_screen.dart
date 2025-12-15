@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:ju_reminder/constants/app_routers.dart';
 import 'package:ju_reminder/constants/constants.dart';
 import 'package:ju_reminder/widgets/image_loader.dart';
-
-import '../home/home_page.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -18,10 +18,9 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Future.delayed(Duration(seconds: 2), () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => MyHomePage(title: kAppName)),
-      );
+      if (mounted) {
+        context.go(rHome);
+      }
     });
   }
 

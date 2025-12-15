@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ju_reminder/constants/routers.dart';
+import 'package:go_router/go_router.dart';
+import 'package:ju_reminder/constants/app_routers.dart';
 import 'package:ju_reminder/data/local/app_storage.dart';
 import 'package:ju_reminder/themes/app_button_style.dart';
 
@@ -57,7 +58,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () async {
-                    final result = await Navigator.pushNamed(context, rLogin);
+                    final result = await context.push(rLogin);
                     if (result != null && result is String) {
                       setState(() {
                         _isLoggedIn = true;

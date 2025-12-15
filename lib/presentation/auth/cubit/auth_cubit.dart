@@ -24,7 +24,7 @@ class LoginCubit extends Cubit<LoginState> {
   }
 
   void togglePassword() {
-    print('$TAG LoginCubit - Toggle password visibility');
+    print('$TAG LoginCubit - is Toggle password ${state.isPasswordVisible} => ${!state.isPasswordVisible}');
     emit(state.copyWith(isPasswordVisible: !state.isPasswordVisible));
   }
 

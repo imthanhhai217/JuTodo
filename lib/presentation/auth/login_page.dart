@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:ju_reminder/constants/constants.dart';
 import 'package:ju_reminder/constants/validator.dart';
 import 'package:ju_reminder/presentation/auth/bloc/auth_bloc.dart';
@@ -41,14 +42,14 @@ class LoginScreen extends StatelessWidget {
           } else {
             // Đóng loading dialog nếu đang hiển thị
             if (_isDialogShowing) {
-              Navigator.pop(context);
+              context.pop();
               _isDialogShowing = false;
             }
 
             if (state is AuthAuthenticatedState) {
               // Chuyển sang Home
               print('$TAG LoginScreen - Navigating to Home');
-              Navigator.pop(context, state.userEmail);
+              context.pop(state.userEmail);
               ScaffoldMessenger.of(
                 context,
               ).showSnackBar(SnackBar(content: Text('Đăng nhập thành công!')));
@@ -110,15 +111,15 @@ class LoginScreen extends StatelessWidget {
             label: Text("Password", style: AppTypography.body),
             suffixIcon: IconButton(
               onPressed: () {
-                context.read<LoginCubit>().togglePassword;
+                context.read<LoginCubit>().togglePassword();
               },
               icon: state.isPasswordVisible
-                  ? Icon(Icons.visibility_off)
-                  : Icon(Icons.visibility),
+                  ? Icon(Icons.visibility)
+                  : Icon(Icons.visibility_off),
             ),
           ),
           keyboardType: TextInputType.text,
-          obscureText: state.isPasswordVisible,
+          obscureText: !state.isPasswordVisible,
           validator: Validator.validatorPassword,
           onChanged: context.read<LoginCubit>().updatePassword,
         ),
