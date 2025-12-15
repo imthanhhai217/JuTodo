@@ -15,8 +15,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   Future<void> _login(AuthLoginEvent event, Emitter<AuthState> emit) async {
     print('$TAG AuthBloc - Login started: ${event.userName}');
-    emit(AuthLoadingState());
-
     try {
       await Future.delayed(
         const Duration(seconds: 3),
