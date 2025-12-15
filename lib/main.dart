@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ju_reminder/constants/app_routers.dart';
 import 'package:ju_reminder/data/local/hive/hive_storage.dart';
 import 'package:ju_reminder/data/repositories/auth_repository.dart';
+import 'package:ju_reminder/data/repositories/product_repository.dart';
+import 'package:ju_reminder/di/locator.dart';
 import 'package:ju_reminder/presentation/auth/bloc/auth_bloc.dart';
 import 'package:ju_reminder/presentation/common/global_loading/cubit/loading_cubit.dart';
 import 'package:ju_reminder/presentation/common/global_loading/global_loading_overlay.dart';
@@ -14,23 +16,17 @@ const TAG = "JuReminder: ";
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await HiveStorage.init();
+  setupGetItLocator();
 
   runApp(
-    MultiRepositoryProvider(
+    MultiBlocProvider(
       providers: [
-        RepositoryProvider<AuthRepository>(
-          create: (context) => AuthRepository(),
+        BlocProvider<AuthBloc>(
+          create: (_) => AuthBloc(getIt<AuthRepository>()),
         ),
+        BlocProvider(create: (_) => LoadingCubit()),
       ],
-      child: MultiBlocProvider(
-        providers: [
-          BlocProvider<AuthBloc>(
-            create: (context) => AuthBloc(context.read<AuthRepository>()),
-          ),
-          BlocProvider(create: (_) => LoadingCubit()),
-        ],
-        child: const MyApp(),
-      ),
+      child: const MyApp(),
     ),
   );
 }
@@ -45,9 +41,7 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.lightTheme,
       debugShowCheckedModeBanner: false,
       builder: (context, child) {
-        return GlobalLoadingOverlay(
-          child: child ?? SizedBox.expand(),
-        );
+        return GlobalLoadingOverlay(child: child ?? SizedBox.expand());
       },
     );
   }

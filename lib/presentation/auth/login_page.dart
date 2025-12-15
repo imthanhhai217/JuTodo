@@ -5,7 +5,7 @@ import 'package:ju_reminder/constants/constants.dart';
 import 'package:ju_reminder/constants/validator.dart';
 import 'package:ju_reminder/presentation/auth/bloc/auth_bloc.dart';
 import 'package:ju_reminder/presentation/auth/cubit/auth_cubit.dart';
-import 'package:ju_reminder/presentation/auth/cubit/login_state.dart';
+import 'package:ju_reminder/presentation/auth/login_state.dart';
 import 'package:ju_reminder/presentation/common/global_loading/cubit/loading_cubit.dart';
 import 'package:ju_reminder/themes/app_typography.dart';
 import 'package:ju_reminder/themes/dimens.dart';
