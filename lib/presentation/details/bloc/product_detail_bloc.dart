@@ -14,11 +14,17 @@ class ProductDetailBloc extends Bloc<ProductEvent, ProductByIDState> {
     on<FetchProductByID>(_onFetchProductById);
   }
 
-  FutureOr<void> _onFetchProductById(FetchProductByID event, Emitter<ProductByIDState> emit) async {
+  FutureOr<void> _onFetchProductById(
+    FetchProductByID event,
+    Emitter<ProductByIDState> emit,
+  ) async {
     emit(ProductByIDLoading());
     try {
-      final productDetailsResponse = await _productRepository.fetchProductById(event.productID);
+      final productDetailsResponse = await _productRepository.fetchProductById(
+        event.productID,
+      );
       if (productDetailsResponse is ApiResponseSuccess) {
+        emit(ProductByIDLoaded(productResponse: productDetailsResponse));
       } else {
         emit(
           ProductByIDError(
