@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:ju_reminder/data/models/product_models.dart';
+import 'package:ju_reminder/data/network/api_response.dart';
 
 abstract class ProductState extends Equatable {}
 
@@ -9,7 +10,7 @@ class ProductInitial extends ProductState {
 }
 
 class ProductLoaded extends ProductState {
-  final ProductResponse productResponse;
+  final ApiResponse<ProductResponse> productResponse;
 
   ProductLoaded({required this.productResponse});
 
