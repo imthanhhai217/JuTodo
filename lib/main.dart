@@ -8,6 +8,7 @@ import 'package:ju_reminder/di/locator.dart';
 import 'package:ju_reminder/presentation/auth/bloc/auth_bloc.dart';
 import 'package:ju_reminder/presentation/common/global_loading/cubit/loading_cubit.dart';
 import 'package:ju_reminder/presentation/common/global_loading/global_loading_overlay.dart';
+import 'package:ju_reminder/presentation/products/bloc/product_bloc.dart';
 
 import 'themes/theme.dart';
 
@@ -21,10 +22,9 @@ void main() async {
   runApp(
     MultiBlocProvider(
       providers: [
-        BlocProvider<AuthBloc>(
-          create: (_) => AuthBloc(getIt<AuthRepository>()),
-        ),
+        BlocProvider<AuthBloc>(create: (_) => AuthBloc(getIt<AuthRepository>())),
         BlocProvider(create: (_) => LoadingCubit()),
+        BlocProvider(create: (context) => ProductBloc(getIt<ProductRepository>())),
       ],
       child: const MyApp(),
     ),

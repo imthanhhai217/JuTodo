@@ -9,6 +9,11 @@ class ProductInitial extends ProductState {
   List<Object?> get props => [];
 }
 
+class ProductLoading extends ProductState {
+  @override
+  List<Object?> get props => [];
+}
+
 class ProductLoaded extends ProductState {
   final ApiResponse<ProductResponse> productResponse;
 
