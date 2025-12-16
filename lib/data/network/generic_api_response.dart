@@ -10,20 +10,17 @@ abstract class GenericApiResponse {
   /// [parser]: Function chuyển đổi raw data thành object type T
   ///
   /// Returns: ApiResponse<T> với trạng thái Success hoặc Failed
-
   Future<ApiResponse<T>> apiCall<T>(Future<Response<dynamic>> Function() call, T Function(dynamic) parser) async {
     try {
       // Thực hiện API call
       final response = await call();
       final statusCode = response.statusCode ?? 500;
-
       // Kiểm tra status code thành công
       if (statusCode == 200) {
         // Parse dữ liệu thành object type T
         final parserData = parser(response.data);
         return ApiResponseSuccess<T>(code: statusCode, data: parserData);
       }
-
       // Trường hợp status code khác 200
       return ApiResponseFailed<T>(code: statusCode, message: response.statusMessage ?? 'Unknown error');
     } on DioException catch (e) {

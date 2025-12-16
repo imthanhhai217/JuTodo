@@ -16,4 +16,11 @@ class ProductRepository extends GenericApiResponse {
       (data) => ProductResponse.fromJson(data),
     );
   }
+
+  Future<ApiResponse<Products>> fetchProductById(String id) async {
+    return apiCall<Products>(
+      () => _dioClient.dio.get(ApiConstants.productDetailEndpoint + id),
+      (data) => Products.fromJson(data),
+    );
+  }
 }

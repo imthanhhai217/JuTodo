@@ -12,6 +12,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
   }
 
   Future<void> _onFetchProduct(FetchProduct event, Emitter<ProductState> emit) async {
+    emit(ProductLoading());
     try {
       final productResponse = await _productRepository.fetchProduct();
       if (productResponse is ApiResponseSuccess) {

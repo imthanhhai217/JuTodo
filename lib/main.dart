@@ -9,6 +9,7 @@ import 'package:ju_reminder/presentation/auth/bloc/auth_bloc.dart';
 import 'package:ju_reminder/presentation/common/global_loading/cubit/loading_cubit.dart';
 import 'package:ju_reminder/presentation/common/global_loading/global_loading_overlay.dart';
 import 'package:ju_reminder/presentation/products/bloc/product_bloc.dart';
+import 'package:ju_reminder/presentation/details/bloc/product_detail_bloc.dart';
 
 import 'themes/theme.dart';
 
@@ -24,7 +25,8 @@ void main() async {
       providers: [
         BlocProvider<AuthBloc>(create: (_) => AuthBloc(getIt<AuthRepository>())),
         BlocProvider(create: (_) => LoadingCubit()),
-        BlocProvider(create: (context) => ProductBloc(getIt<ProductRepository>())),
+        BlocProvider(create: (_) => ProductBloc(getIt<ProductRepository>())),
+        BlocProvider(create: (_) => ProductDetailBloc(getIt<ProductRepository>())),
       ],
       child: const MyApp(),
     ),

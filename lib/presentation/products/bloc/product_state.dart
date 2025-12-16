@@ -2,19 +2,20 @@ import 'package:equatable/equatable.dart';
 import 'package:ju_reminder/data/models/product_models.dart';
 import 'package:ju_reminder/data/network/api_response.dart';
 
-abstract class ProductState extends Equatable {}
+/// State for product list
+sealed class ProductState extends Equatable {}
 
-class ProductInitial extends ProductState {
+final class ProductInitial extends ProductState {
   @override
   List<Object?> get props => [];
 }
 
-class ProductLoading extends ProductState {
+final class ProductLoading extends ProductState {
   @override
   List<Object?> get props => [];
 }
 
-class ProductLoaded extends ProductState {
+final class ProductLoaded extends ProductState {
   final ApiResponse<ProductResponse> productResponse;
 
   ProductLoaded({required this.productResponse});
@@ -23,7 +24,7 @@ class ProductLoaded extends ProductState {
   List<Object?> get props => [productResponse];
 }
 
-class ProductError extends ProductState {
+final class ProductError extends ProductState {
   final int code;
   final String message;
 

@@ -71,10 +71,10 @@ class _ProductListViewState extends State<ProductListView> {
   Widget _buildProductItem(Products product) => ClickableWrapper(
     onClick: () {
       final productID = product.id?.toString() ?? -1;
-      if (productID == -1){
+      if (productID == -1) {
         print("$TAG Invalid product ID");
         return;
-      } 
+      }
       print("$TAG Click $productID");
       context.push(rDetails, extra: productID);
     },
