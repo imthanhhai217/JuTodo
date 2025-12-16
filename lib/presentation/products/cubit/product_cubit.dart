@@ -9,6 +9,7 @@ class ProductCubit extends Cubit<ProductState> {
   ProductCubit(this._productRepository) : super(ProductInitial());
 
   Future<void> fetchListProduct() async {
+    emit(ProductLoading());
     try {
       final productResponse = await _productRepository.fetchProduct();
       emit(ProductLoaded(productResponse: productResponse));

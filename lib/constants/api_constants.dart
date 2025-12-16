@@ -21,7 +21,7 @@ class ApiConstants {
 
   // Products Endpoints
   static const String productsEndpoint = '/products';
-  static const String productDetailEndpoint = '/products'; // + id
+  static const String productDetailEndpoint = '/products/'; // + id
   static const String searchProductsEndpoint = '/products/search';
 
   // Users Endpoints

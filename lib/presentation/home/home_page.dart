@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ju_reminder/constants/app_routers.dart';
 import 'package:ju_reminder/data/local/app_storage.dart';
+import 'package:ju_reminder/presentation/products/list_product.dart';
 import 'package:ju_reminder/themes/app_button_style.dart';
 
 import '../../constants/constants.dart';
 import '../../constants/spacing.dart';
 import '../../widgets/clickable_wrapper.dart';
 import '../../widgets/image_loader.dart';
-import '../details/details_page.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -26,49 +26,52 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-      ),
+      appBar: AppBar(backgroundColor: Theme.of(context).colorScheme.inversePrimary, title: Text(widget.title)),
       body: Padding(
         padding: const EdgeInsets.all(16),
-        child: _isLoggedIn
-            ? Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  profileRow(userName: _userName),
-                  SizedBox(height: kDefaultMargin),
-                  SizedBox(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            _isLoggedIn
+                ? Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      profileRow(userName: _userName),
+                      SizedBox(height: kDefaultMargin),
+                      SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          style: AppButtonStyles.elevateWhiteButtonStyle,
+                          onPressed: () async {
+                            await AppStorage.logout();
+                            setState(() {
+                              _isLoggedIn = false;
+                              _userName = "";
+                            });
+                          },
+                          child: Text("Logout"),
+                        ),
+                      ),
+                    ],
+                  )
+                : SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      style: AppButtonStyles.elevateWhiteButtonStyle,
                       onPressed: () async {
-                        await AppStorage.logout();
-                        setState(() {
-                          _isLoggedIn = false;
-                          _userName = "";
-                        });
+                        final result = await context.push(rLogin);
+                        if (result != null && result is String) {
+                          setState(() {
+                            _isLoggedIn = true;
+                            _userName = result;
+                          });
+                        }
                       },
-                      child: Text("Logout"),
+                      child: Text("Login"),
                     ),
                   ),
-                ],
-              )
-            : SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () async {
-                    final result = await context.push(rLogin);
-                    if (result != null && result is String) {
-                      setState(() {
-                        _isLoggedIn = true;
-                        _userName = result;
-                      });
-                    }
-                  },
-                  child: Text("Login"),
-                ),
-              ),
+            Expanded(child: ProductListView()),
+          ],
+        ),
       ),
     );
   }
@@ -100,9 +103,6 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void navigationToDetails(String data) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => DetailsPage(message: data)),
-    );
+    context.go(rDetails, extra: data);
   }
 }

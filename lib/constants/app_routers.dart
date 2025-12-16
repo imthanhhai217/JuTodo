@@ -19,6 +19,9 @@ final GoRouter appRouter = GoRouter(
       builder: (context, state) => MyHomePage(title: kAppName),
     ),
     GoRoute(path: rLogin, builder: (context, state) => LoginScreen()),
-    GoRoute(path: rDetails, builder: (context, state) => DetailsPage()),
+    GoRoute(path: rDetails, builder: (context, state){
+      final productDetails = state.extra as String?;
+      return DetailsPage(productDetails);
+    }),
   ],
 );
