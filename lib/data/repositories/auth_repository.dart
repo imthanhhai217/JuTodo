@@ -1,6 +1,8 @@
 import 'package:ju_reminder/data/local/hive/hive_storage.dart';
 import 'package:ju_reminder/main.dart';
 
+import '../../bs/Basic.dart';
+
 class AuthRepository {
   Future<bool> login(String email, String password) async {
     print('$TAG AuthRepository - Login attempt: email=$email');

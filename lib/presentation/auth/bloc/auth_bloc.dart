@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ju_reminder/data/repositories/auth_repository.dart';
 import 'package:ju_reminder/main.dart';
 
+import '../../../bs/Basic.dart';
 import 'auth_event.dart';
 import 'auth_state.dart';
 

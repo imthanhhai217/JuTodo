@@ -2,6 +2,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ju_reminder/main.dart';
 import 'package:ju_reminder/presentation/auth/login_state.dart';
 
+import '../../../bs/Basic.dart';
+
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit() : super(const LoginState());
 
