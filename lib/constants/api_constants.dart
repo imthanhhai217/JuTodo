@@ -1,18 +1,17 @@
+import '../core/config/app_config.dart';
+
 /// API Constants
 /// Quản lý tất cả các endpoint và base URL của API
 class ApiConstants {
   // Base URL
-  static const String baseUrl = 'https://dummyjson.com';
+  static String baseUrl = AppConfig.instance.apiBaseUrl;
 
   // Timeout
   static const int connectionTimeout = 30000; // 30 seconds
   static const int receiveTimeout = 30000; // 30 seconds
 
   // Headers
-  static const Map<String, String> headers = {
-    'Content-Type': 'application/json',
-    'Accept': 'application/json',
-  };
+  static const Map<String, String> headers = {'Content-Type': 'application/json', 'Accept': 'application/json'};
 
   // Auth Endpoints
   static const String loginEndpoint = '/auth/login';
@@ -30,7 +29,8 @@ class ApiConstants {
 
   // Full URLs (helper getters)
   static String get loginUrl => '$baseUrl$loginEndpoint';
+
   static String get productsUrl => '$baseUrl$productsEndpoint';
+
   static String get usersUrl => '$baseUrl$usersEndpoint';
 }
-

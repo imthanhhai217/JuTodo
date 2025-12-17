@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ju_reminder/bs/Basic.dart';
 import 'package:ju_reminder/di/locator.dart';
 import 'package:ju_reminder/presentation/common/global_loading/cubit/loading_cubit.dart';
 import 'package:ju_reminder/presentation/details/bloc/product_detail_bloc.dart';
 import 'package:ju_reminder/presentation/details/bloc/product_detail_state.dart';
 import 'package:ju_reminder/presentation/products/bloc/product_event.dart';
+import 'package:ju_reminder/widgets/clickable_wrapper.dart';
+
+import '../products/bloc/product_bloc.dart';
 
 class DetailsPage extends StatefulWidget {
   final String? productID;
@@ -21,8 +25,7 @@ class _DetailsPageState extends State<DetailsPage> {
   @override
   void initState() {
     super.initState();
-    _productDetailBloc = ProductDetailBloc(getIt())
-      ..add(FetchProductByID(widget.productID ?? ""));
+    _productDetailBloc = ProductDetailBloc(getIt())..add(FetchProductByID(widget.productID ?? ""));
   }
 
   @override
@@ -36,24 +39,25 @@ class _DetailsPageState extends State<DetailsPage> {
         builder: (context, state) {
           return switch (state) {
             ProductByIDLoaded(:final productResponse) => Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    productResponse.data?.title ?? "",
-                    style: Theme.of(context).textTheme.headlineMedium,
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    '\$${productResponse.data?.price.toString() ?? ""}',
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                ],
+              child: ClickableWrapper(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(productResponse.data?.title ?? "", style: Theme.of(context).textTheme.headlineMedium),
+                    const SizedBox(height: 16),
+                    Text(
+                      '\$${productResponse.data?.price.toString() ?? ""}',
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                  ],
+                ),
+                onClick: () {
+                  print('$TAG Reloading product details...');
+                  context.read<ProductBloc>().add(FetchProduct());
+                },
               ),
             ),
-            ProductByIDError(:final message) => Center(
-              child: Text('Error: $message'),
-            ),
+            ProductByIDError(:final message) => Center(child: Text('Error: $message')),
             _ => const SizedBox.shrink(),
           };
         },

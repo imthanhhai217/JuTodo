@@ -40,7 +40,7 @@ class AppConfig {
       case Environment.dev:
         return AppConfig._(
           environment: env,
-          apiBaseUrl: 'https://api-dev.example.com',
+          apiBaseUrl: 'https://dummyjson.com',
           appName: 'JuTodo (Dev)',
           enableLogging: true,
           apiTimeout: 30,
@@ -49,7 +49,7 @@ class AppConfig {
       case Environment.staging:
         return AppConfig._(
           environment: env,
-          apiBaseUrl: 'https://api-staging.example.com',
+          apiBaseUrl: 'https://dummyjson.com',
           appName: 'JuTodo (Staging)',
           enableLogging: true,
           apiTimeout: 30,
@@ -58,7 +58,7 @@ class AppConfig {
       case Environment.production:
         return AppConfig._(
           environment: env,
-          apiBaseUrl: 'https://api.example.com',
+          apiBaseUrl: 'https://dummyjson.com',
           appName: 'JuTodo',
           enableLogging: false,
           apiTimeout: 30,

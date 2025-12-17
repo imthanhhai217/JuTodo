@@ -5,16 +5,15 @@ import 'package:ju_reminder/bs/Basic.dart';
 import 'package:ju_reminder/constants/app_routers.dart';
 import 'package:ju_reminder/constants/constants.dart';
 import 'package:ju_reminder/data/models/product_models.dart';
-import 'package:ju_reminder/di/locator.dart';
 import 'package:ju_reminder/presentation/common/global_loading/cubit/loading_cubit.dart';
-import 'package:ju_reminder/presentation/common/global_loading/loading_state.dart';
 import 'package:ju_reminder/presentation/products/bloc/product_bloc.dart';
-import 'package:ju_reminder/presentation/products/bloc/product_event.dart';
 import 'package:ju_reminder/presentation/products/bloc/product_state.dart';
 import 'package:ju_reminder/themes/app_typography.dart';
 import 'package:ju_reminder/themes/dimens.dart';
 import 'package:ju_reminder/widgets/clickable_wrapper.dart';
 import 'package:ju_reminder/widgets/image_loader.dart';
+
+import 'bloc/product_event.dart';
 
 class ProductListView extends StatefulWidget {
   const ProductListView({super.key});
@@ -31,18 +30,22 @@ class _ProductListViewState extends State<ProductListView> {
   @override
   void initState() {
     super.initState();
-    _productBloc = ProductBloc(getIt())..add(FetchProduct());
+    // _productBloc = ProductBloc(getIt())..add(FetchProduct());
+    _productBloc = context.read<ProductBloc>();
+    _productBloc.add(FetchProduct());
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocConsumer(
+      body: BlocConsumer<ProductBloc, ProductState>(
         bloc: _productBloc,
         listener: (context, state) {
-          if (state is LoadingState) {
+          if (state is ProductLoading) {
+            print("$TAG Show loading...");
             context.read<LoadingCubit>().showLoading("Loading products...");
           } else {
+            print("$TAG Hide loading...");
             context.read<LoadingCubit>().hideLoading();
           }
         },
@@ -94,7 +97,7 @@ class _ProductListViewState extends State<ProductListView> {
 
   @override
   void dispose() {
-    _productBloc.close();
+    // _productBloc.close();
     super.dispose();
   }
 }
